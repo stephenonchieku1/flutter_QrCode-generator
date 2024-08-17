@@ -1,69 +1,161 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
-import  'package:qr_flutter/qr_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-class Homescreen extends StatefulWidget {
-  const Homescreen({super.key});
+import 'package:iconly/iconly.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Homescreen> createState() => _HomescreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomescreenState extends State<Homescreen> {
+class _HomeScreenState extends State<HomeScreen> {
+  Color whiteColor = const Color(0XFFF2F2F2);
+  Color blackColor = const Color(0XFF0C110F);
+  Color buttonColor = const Color(0XFF00FFAE);
+
+  String qrData = 'https://github.com/stephenonchieku1';
+  TextEditingController qrDataController = TextEditingController();
+  final GlobalKey qrKey = GlobalKey(); // Ensure this is properly defined
+
+  @override
+  void dispose() {
+    qrDataController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.blue,
       appBar: AppBar(
-        title: const Text('QR CODE SCANNER V1.0'),
         backgroundColor: Colors.blue,
-        leading: const Icon(IconlyLight.category,
-        color: Colors.white,
+        elevation: 0,
+        leading: Icon(
+          IconlyLight.category,
+          color: whiteColor,
         ),
-        actions: const [
-          Icon(IconlyLight.search,
-          color: Colors.white,),
-          SizedBox(
-            width: 20,
-          )
-        ],
-      ),
-    body: Padding(padding: EdgeInsets.all(12.0),
-    child: Column(
-      children: [
-        Text("Create a personal qr-code  for your brand ",
-         style: GoogleFonts.poppins(
-          fontSize: 18,
-          fontWeight: FontWeight.bold
-          //color: Colors.white,
-          )
+        actions: [
+          Icon(
+            IconlyLight.search,
+            color: whiteColor,
           ),
           const SizedBox(
-            height: 40,
+            width: 12,
           ),
-          Container(
-            height: 400,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(20),
-
+          Icon(
+            IconlyLight.scan,
+            color: whiteColor,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            Text(
+              'Create a personal QR-Code',
+              style: GoogleFonts.raleway(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: whiteColor,
+              ),
             ),
-            child:  RepaintBoundary(
-              key: qrkey,
-              child: QrImageView(
-                data: qrData,
-                version: QrVersions.auto,
-                size: 300,
-                dataModuleStyle: QrDataModuleStyle(
-                  dataModuleShape: QrDataModuleShape.circle,
-                  color: Colors.black,
-                ),),
+            const SizedBox(
+              height: 40,
             ),
-          )
-
-      ],
-    ),
-    ),
+            Container(
+              height: 400,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: whiteColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: RepaintBoundary(
+                key: qrKey,
+                child: QrImageView(
+                  data: qrData,
+                  version: QrVersions.auto,
+                  size: 300,
+                  dataModuleStyle: QrDataModuleStyle(
+                    dataModuleShape: QrDataModuleShape.circle,
+                    color: blackColor,
+                  ),
+                  eyeStyle: QrEyeStyle(
+                    eyeShape: QrEyeShape.square,
+                    color: blackColor,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            TextFormField(
+              controller: qrDataController,
+              style: GoogleFonts.raleway(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: whiteColor,
+              ),
+              cursorColor: buttonColor,
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  borderSide: BorderSide(
+                    color: buttonColor,
+                  ),
+                ),
+                border: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  borderSide: BorderSide(
+                    color: buttonColor,
+                  ),
+                ),
+              ),
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: () {
+                if (qrDataController.text.isNotEmpty) {
+                  setState(() {
+                    qrData = qrDataController.text;
+                  });
+                }
+              },
+              child: Container(
+                height: 80,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: buttonColor,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Center(
+                  child: Text(
+                    'Generate QR-Code',
+                    style: GoogleFonts.raleway(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: blackColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
