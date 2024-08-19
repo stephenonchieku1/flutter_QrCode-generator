@@ -13,7 +13,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Color whiteColor = const Color(0XFFF2F2F2);
   Color blackColor = const Color(0XFF0C110F);
-  Color buttonColor = const Color(0XFF00FFAE);
+  Color buttonColor =  Colors.orange;
 
   String qrData = 'https://github.com/stephenonchieku1';
   TextEditingController qrDataController = TextEditingController();
@@ -30,16 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.blue,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.black,
         elevation: 0,
         leading: Icon(
           IconlyLight.category,
           color: whiteColor,
         ),
         actions: [
-          Icon(
+          const Icon(
             IconlyLight.search,
-            color: whiteColor,
+            color: Colors.purple,
           ),
           const SizedBox(
             width: 12,
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
             color: whiteColor,
           ),
           const SizedBox(
-            width: 8,
+            width: 10,
           ),
         ],
       ),
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Text(
-              'Create a personal QR-Code',
+              'GENERATE A  QR-CODE',
               style: GoogleFonts.raleway(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
-              height: 40,
+              height: 30,
             ),
             Container(
               height: 400,
@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   version: QrVersions.auto,
                   size: 300,
                   dataModuleStyle: QrDataModuleStyle(
-                    dataModuleShape: QrDataModuleShape.circle,
+                    dataModuleShape: QrDataModuleShape.square,
                     color: blackColor,
                   ),
                   eyeStyle: QrEyeStyle(
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 15,
             ),
             TextFormField(
               controller: qrDataController,
@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Center(
                   child: Text(
                     'Generate QR-Code',
-                    style: GoogleFonts.raleway(
+                    style: GoogleFonts.poppins(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
                       color: blackColor,
@@ -151,7 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
           ],
         ),
